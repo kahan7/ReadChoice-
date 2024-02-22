@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.bg-brown-200 {
+    background-color: #baac9a;
+  };
+
+.elitetext {
+  font-family: "Times New Roman", Times, serif;
+font-size: 24px;
+font-weight: 700;
+letter-spacing: 1px;
+text-transform: uppercase;
+color: #333;
+text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.3);
+
+}

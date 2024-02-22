@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Untitled Document</title>
+</head>
+
+<body>
+  <script>
+    const listBooks = [
+      "Sáng.",
+      "Xuất.",
+      "Lê.",
+      "Dân.",
+      "Phục.",
+      "G-suê",
+      "Quan.",
+      "Ru.",
+      "1 Sa.",
+      "2 Sa.",
+      "1 Vua.",
+      "2 Vua.",
+      "1 Sử.",
+      "2 Sử.",
+      "Exr.",
+      "Nê.",
+      "Êxt.",
+      "Gióp",
+      "Thi.",
+      "Châm.",
+      "Truyền.",
+      "Nhã.",
+      "Ês.",
+      "Giê.",
+      "Ca.",
+      "Êxc.",
+      "Đa.",
+      "Ôs.",
+      "G-ên",
+      "Am.",
+      "Áp.",
+      "G-na",
+      "Mi.",
+      "Na.",
+      "Ha.",
+      "Sô.",
+      "Agh.",
+      "Xa.",
+      "Mal.",
+      "1 Gi.",
+      "2 Gi.",
+      "3 Gi.",
+      "Mat.",
+      "Mác",
+      "Lu.",
+      "Gi.",
+      "Công.",
+      "La.",
+      "1 Cô.",
+      "2 Cô.",
+      "Ga.",
+      "Êph.",
+      "Phil.",
+      "Côl.",
+      "1 Tê.",
+      "2 Tê.",
+      "1 Ti.",
+      "2 Ti.",
+      "Tít",
+      "Plm.",
+      "Hê.",
+      "Gia.",
+      "1 Phi.",
+      "2 Phi.",
+      "Giu.",
+      "Khải.",
+    ];
+    const listBooks2 = [
+      "Sáng thế ký",
+      "Xuất ê díp tô ký",
+      "Lê vi ký",
+      "Dân số ký",
+      "Phục truyền Luật lệ ký",
+      "Giô suê",
+      "Các quan xét",
+      "Ru tơ",
+      "1 Sa mu ên",
+      "2 Sa mu ên",
+      "1 Các Vua",
+      "2 Các Vua",
+      "1 Sử Ký",
+      "2 Sử Ký",
+      "Ê xơ ra",
+      "Nê hê mi",
+      "Ê xơ tê",
+      "Gióp",
+      "Thi thiên",
+      "Châm ngôn",
+      "Truyền đạo",
+      "Nhã ca",
+      "Ê sai",
+      "Giê rê mi",
+      "Ca thương",
+      "Ê xê chi ên",
+      "Đa ni ên",
+      "Ô suê",
+      "Giô ên",
+      "A mốt",
+      "Áp đia",
+      "Giô na",
+      "Mi chê",
+      "Na hum",
+      "Ha ba cúc",
+      "Sô phô ni",
+      "A ghê",
+      "Xa cha ri",
+      "Ma la chi",
+      "1 Giăng",
+      "2 Giăng",
+      "3 Giăng",
+      "Ma thi ơ",
+      "Mác",
+      "Luca",
+      "Giăng",
+      "Công vụ các sứ đồ",
+      "La mã",
+      "1 Cô rinh tô",
+      "2 Cô rinh tô",
+      "Ga la ti",
+      "Ê phê sô",
+      "Phi lip",
+      "Cô lô se",
+      "1 Tê sa lô ni ca",
+      "2 Tê sa lô ni ca",
+      "1 Ti mô thê",
+      "2 Ti mô thê",
+      "Tít",
+      "Phi lê môn",
+      "Hê bơ rơ",
+      "Gia cơ",
+      "1 Phi-e-rơ",
+      "2 Phi-e-rơ",
+      "Giu đa",
+      "Khải thị",
+    ];
+    function findMostRelevantElement(array, input) {
+      for (let i = 0; i < array.length; i++) {
+        if (
+          input.toLowerCase() === array[i].toLowerCase() ||
+          input.toLowerCase() === listBooks2[i].toLowerCase() ||
+          array[i].toLowerCase().replace(/[.]/g, "") ===
+          input.toLowerCase() ||
+          listBooks2[i].toLowerCase() ===
+          input.toLowerCase().replace(/[-]/g, " ")
+        ) {
+          return array[i];
+        }
+      }
+    }
+    function InputHandler(input) {
+        const regex = /([^;]+)/g; // tách các chuổi con bởi dấu ";"
+      const commaSeparatedArray = input.match(regex);
+      let addresses = [];
+      for (let i = 0; i < commaSeparatedArray.length; i++) {
+        if (!/[a-zA-Z]/.test(commaSeparatedArray[i].trim())) {
+          // trường hợp  1 Giăng 3:1;7-8;7-9;
+          let temp = addresses[addresses.length - 1].trim();
+          if (/:/.test(commaSeparatedArray[i].trim())) {
+            // trường hợp  1 Giăng 3:1;3:4;5:6
+            addresses.push(
+              temp
+                .match(/^(.*?[a-zA-ZÀ-ỹ])+/g)
+                ?.join()
+                .trim() +
+              " " +
+              commaSeparatedArray[i].trim()
+            );
+          } else {
+            addresses.splice(addresses.length - 1, addresses.length);
+            if (!/:/.test(temp)) {
+              // trường hợp sách trước đó chỉ có chương vd "1 Giăng 3;3-4"
+              addresses.push(temp + ":" + commaSeparatedArray[i].trim());
+            } else {
+              addresses.push(temp + "," + commaSeparatedArray[i].trim());
+            }
+          }
+        } else {
+          addresses.push(commaSeparatedArray[i].trim());
+        }
+      }
+   
+      let fullRequestedInfo = [];
+      let result =''
+      for (let i = 0; i < addresses.length; i++) {
+       const name= findMostRelevantElement(listBooks,addresses[i]
+            .match(/^(.*?[a-zA-ZÀ-ỹ])+/g)
+            ?.join()
+            .replace(/[,]/g, " ")
+            .trim())
+       fullRequestedInfo.push(  name+ 
+       addresses[i].match( /(?:[a-zA-Z]\s)?(\d+)(?::|$)/)?.[1]+
+       addresses[i].match(/:(.+)/)?.[1].split(",") ?? "",
+        )
+      }
+   return fullRequestedInfo.join(';')
+    }
+    let input = "xuất 2:3, 6, 7; 3-4; gióp 1:4-5;  1 Giăng 2; Gi. 3; 1 Phi-e-rơ 1:4-5,8";
+    const output = findMostRelevantElement(listBooks, input);
+    console.log(InputHandler(input));
+  </script>
+</body>
+</html>

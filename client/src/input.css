@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.bg-brown-200 {
+    background-color: #baac9a;
+  }
+  h2 {
+    font-family: 'Copernicus', 'Libre Baskerville', Georgia, serif;
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 46px;
+    color: rgb(30, 25, 21);
+  }
+  
